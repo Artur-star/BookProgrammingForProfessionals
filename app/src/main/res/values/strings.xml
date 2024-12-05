@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">BookProgrammingForProfessionals</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+    <string name="next_button">Next</string>
+    <string name="back_button">Back</string>
+    <string name="question_australia">question_australia</string>
+    <string name="question_oceans">question_oceans</string>
+    <string name="question_mideast">question_mideast</string>
+    <string name="question_africa">question_africa</string>
+    <string name="question_americas">question_americas</string>
+    <string name="question_asia">question_asia</string>
 </resources>
