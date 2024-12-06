@@ -1,11 +1,13 @@
 package com.knyazev.bookprogrammingforprofessionals
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 
 class MainActivity : ComponentActivity() {
     private lateinit var trueButton: Button
@@ -14,16 +16,10 @@ class MainActivity : ComponentActivity() {
     private lateinit var nextButton: ImageButton
     private lateinit var queTextView: TextView
 
-    private val questionBank = listOf(
-        Question(R.string.question_australia, true),
-        Question(R.string.question_oceans, true),
-        Question(R.string.question_mideast, false),
-        Question(R.string.question_africa, false),
-        Question(R.string.question_americas, true),
-        Question(R.string.question_asia, true),
-    )
 
-    private var currentIndex = questionBank.size - 1
+
+
+    private val quizViewModel: QuizViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,39 +39,37 @@ class MainActivity : ComponentActivity() {
             checkAnswer(false)
         }
 
-        backButton.setOnClickListener {
-            if (currentIndex == 0) {
-                currentIndex = questionBank.size
-            }
-            currentIndex -= 1 % questionBank.size
-            updateQuestion()
-        }
-
-        nextButton.setOnClickListener {
-            currentIndex = (currentIndex + 1) % questionBank.size
-            updateQuestion()
-        }
-
+//        backButton.setOnClickListener {
+//            if (currentIndex == 0) {
+//                currentIndex = questionBank.size
+//            }
+//            currentIndex -= 1 % questionBank.size
+//            updateQuestion()
+//        }
+//
+//        nextButton.setOnClickListener {
+//            quizViewModel.moveToNext()
+//            updateQuestion()
+//        }
+//
         queTextView.setOnClickListener() {
-            currentIndex = (currentIndex + 1) % questionBank.size
+            quizViewModel.moveToNext()
             updateQuestion()
         }
-
-        val questionTextResId: Int = questionBank[currentIndex].textResId
-        queTextView.setText(questionTextResId)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
+//
+//        val questionTextResId: Int = questionBank[currentIndex].textResId
+//        queTextView.setText(questionTextResId)
+//
+//        Log.d(TAG, "Got a QuizViewModel: $quizViewModel")
     }
 
     private fun updateQuestion() {
-        val questionTextResId: Int = questionBank[currentIndex].textResId
+        val questionTextResId: Int = quizViewModel.currentQuestionText
         queTextView.setText(questionTextResId)
     }
 
     private fun checkAnswer(userAnswer: Boolean) {
-        val correctAnswer = questionBank[currentIndex].answer
+        val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId =
             if (userAnswer == correctAnswer) R.string.correct_toast
             else R.string.incorrect_toast
