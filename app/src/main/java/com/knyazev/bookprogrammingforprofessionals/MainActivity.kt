@@ -16,9 +16,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var nextButton: ImageButton
     private lateinit var queTextView: TextView
 
-
-
-
     private val quizViewModel: QuizViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +54,8 @@ class MainActivity : ComponentActivity() {
             updateQuestion()
         }
 //
-//        val questionTextResId: Int = questionBank[currentIndex].textResId
-//        queTextView.setText(questionTextResId)
+        val questionTextResId: Int = quizViewModel.currentQuestionText
+        queTextView.setText(questionTextResId)
 //
 //        Log.d(TAG, "Got a QuizViewModel: $quizViewModel")
     }
