@@ -1,5 +1,6 @@
 package com.knyazev.bookprogrammingforprofessionals
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 
 const val TAG = "!!!"
@@ -14,6 +15,10 @@ class QuizViewModel : ViewModel() {
         Question(R.string.question_americas, true),
         Question(R.string.question_asia, true),
     )
+
+    init {
+        Log.d("!!!", "init")
+    }
 
     var currentIndex = 0
 

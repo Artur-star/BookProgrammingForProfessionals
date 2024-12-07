@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
+import com.knyazev.bookprogrammingforprofessionals.Const.KEY_INDEX
 
 class MainActivity : ComponentActivity() {
     private lateinit var trueButton: Button
@@ -20,7 +21,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val index = savedInstanceState?.getInt(KEY_INDEX) ?: 2
+        quizViewModel.currentIndex = index
         setContentView(R.layout.activity_main)
+        Log.d("!!!", "onCreate")
 
         trueButton = findViewById(R.id.true_id)
         falseButton = findViewById(R.id.false_id)
@@ -37,27 +41,34 @@ class MainActivity : ComponentActivity() {
         }
 
 //        backButton.setOnClickListener {
-//            if (currentIndex == 0) {
+//            val currentIndex = quizViewModel.currentIndex
+//            if (quizViewModel.currentIndex == 0) {
 //                currentIndex = questionBank.size
 //            }
 //            currentIndex -= 1 % questionBank.size
 //            updateQuestion()
 //        }
-//
-//        nextButton.setOnClickListener {
-//            quizViewModel.moveToNext()
-//            updateQuestion()
-//        }
-//
+
+        nextButton.setOnClickListener {
+            quizViewModel.moveToNext()
+            updateQuestion()
+        }
+
         queTextView.setOnClickListener() {
             quizViewModel.moveToNext()
             updateQuestion()
         }
-//
+
         val questionTextResId: Int = quizViewModel.currentQuestionText
         queTextView.setText(questionTextResId)
-//
-//        Log.d(TAG, "Got a QuizViewModel: $quizViewModel")
+
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.i(TAG, "onSavedInstanceState")
+        outState.putInt(KEY_INDEX, quizViewModel.currentIndex)
     }
 
     private fun updateQuestion() {
